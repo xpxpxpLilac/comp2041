@@ -1,0 +1,7 @@
+#!/usr/bin/perl
+foreach $line (<>){
+	if($line =~ /[0-9.]+/)
+
+
+
+}

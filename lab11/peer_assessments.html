@@ -1,0 +1,11 @@
+{% extends "peer_base.html" %}
+{% block body %}
+<!--student = student_details for name,namelist = znum_list for grade-->
+{{ message }}
+<ul>
+{% for id in namelist %}
+	<li>{{namelist[id]}} from {{id}} {{student[id]['name']}}</li>
+{% endfor %}
+</ul>
+Your overall grade is the median of the above: <b>{{med}}</b>
+{% endblock %}

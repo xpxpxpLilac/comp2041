@@ -1,0 +1,15 @@
+#!/usr/bin/python
+import re, sys
+ind={}
+pod={}
+for line in sys.stdin:
+	line = line.lower()
+	line = re.sub(r'( )*s$','',line)
+	line = re.sub(r' +',' ',line)
+	a = re.findall('(\d+) (.*)',line)
+	if a[0][1] in ind:
+		ind[a[0][1]] += a[0][0]		
+	else:
+		ind[a[0][1]] = a[0][0]
+	pod[a[0][1]] += 1
+ind.sort

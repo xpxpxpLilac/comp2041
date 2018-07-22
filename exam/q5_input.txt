@@ -1,0 +1,11 @@
+Lines may have no embedded commands
+or several: <!date><!date><!date>
+Here is the contents of q5_file.txt
+<q5_file.txt>
+1 empty file's contents: </dev/null>
+3 empty files:
+</dev/null> </dev/null> </dev/null>
+/bin/true prints nothing:
+<!/bin/true>
+Some commands print <!echo -n no> newlines.
+>>> The end. 

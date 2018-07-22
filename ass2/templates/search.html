@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block body_contents %}
+<style> 
+input[type=text] {
+    width: 50%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('/static/searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    margin:auto;
+    display:block;
+}
+.comment {
+    display:none;
+}
+.close {
+}
+</style>
+<div>
+<form method="POST" action={{url_for("search")}}>
+  <input type="text" name="keyword" placeholder="Search..">
+</form>
+
+</div>
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:20px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col m3 w3-white">
+      <div class="w3-container">
+	  	</br>
+      <p style="font-size:20px;"><strong>Relative User</strong></p>
+	  {% for id in result_user %}
+	 		 <div class="w3-container">
+       	<a href={{url_for("friends",f_id=id)}}><img src={{result_user[id]['img_path']}} alt="Forest" style="float:left;width:20%;"></a>
+	    	<br>
+        <a href={{url_for("friends",f_id=id)}}><span style="float:right;font-size:10px;"><strong>{{result_user[id]['full_name']}}</strong></span></a>
+	    	<hr class="w3-clear">
+	  	</div>
+	  {% endfor %}
+       </div>
+    
+    <!-- End Left Column -->
+    </div>
+    
+    <!-- Middle Column -->
+    <div class="w3-col m9">
+     {% for message in result_post %}      
+      <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+        <img src={{result_post[message]['img_path']}} alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">{{result_post[message]['time']}}</span>
+        <h4>{{result_post[message]['full_name']}}</h4><br>
+        <hr class="w3-clear">
+        <p>{{message}}</p>
+        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button> 
+        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button> 
+	<div class="w3-container w3-light-grey w3-round w3-margin comment"><br>
+	<div>
+	    <form method="POST" action={{url_for("start")}}>
+	    <input type="hidden" name="filename" value={{result_post[message]['file']}} />
+ 	    <input style="width:100%;font-size:10px" type="text" name="comment" placeholder="Say something..">
+            </form>
+	  </div><br>
+        {%  for c in result_post[message]['comment'] %}
+	  <span class="w3-left w3-opacity">{{result_post[message]['comment'][c]['full_name']}}</span>
+	  <span class="w3-right w3-opacity">{{result_post[message]['comment'][c]['time']}}</span><hr class="w3-clear">
+	  <p>{{result_post[message]['comment'][c]['message']}}</p>
+		{% for r in result_post[message]['comment'][c]['reply']%}
+		  <div class="w3-container w3-grey w3-round w3-margin"><br>
+		    <span class="w3-left w3-opacity">{{result_post[message]['comment'][c]['reply'][r]['full_name']}}</span>
+	  	    <span class="w3-right w3-opacity">{{result_post[message]['comment'][c]['reply'][r]['time']}}</span>
+	 	    <p>{{result_post[message]['comment'][c]['reply'][r]['message']}}</p>
+		  </div>
+		{% endfor %}
+	{%  endfor %}
+	</div><br>
+      <button class="w3-button w3-block w3-dark-grey close">More Comment</button>
+
+      </div>
+      {% endfor %}
+      
+    <!-- End Middle Column -->
+    </div>
+    
+    
+    
+  <!-- End Grid -->
+  </div>
+  
+<!-- End Page Container -->
+</div>
+<br>
+
+
+
+
+{% endblock %}
